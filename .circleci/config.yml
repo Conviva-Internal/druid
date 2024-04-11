@@ -54,4 +54,4 @@ workflows:
   druid-build:
     jobs:
       - build_docker_image:
-          context: 'kubernetes'
+          context: 'conviva_deploy'
