@@ -26,7 +26,7 @@ jobs:
           name: Provision JFrog Artifactory maven repo
           command: |
             mkdir -p ~/.m2
-            # eval "echo \"$(<~/repo/.circleci/settings.xml)\"" 2> /dev/null 1>~/.m2/settings.xml
+            eval "echo \"$(<~/repo/.circleci/settings.xml)\"" 2> /dev/null 1>~/.m2/settings.xml
       - run:
           name: Build
           command: mvn clean package -DskipTests -Pdist
