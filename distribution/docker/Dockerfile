@@ -80,6 +80,7 @@ RUN addgroup -S -g 1000 druid \
 
 
 COPY --from=bash-static /bin/bash /bin/bash
+COPY --from=tarampampam/curl /bin/curl /bin/curl
 RUN chmod 755 /bin/bash
 
 COPY --chown=druid:druid --from=builder /opt /opt
