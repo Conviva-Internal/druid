@@ -16,17 +16,17 @@ jobs:
             - maven-repo-{{ .Environment.CI_CACHE_VERSION }}-{{ .Branch }}-
             - maven-repo-{{ .Environment.CI_CACHE_VERSION }}-
       - run:
-          name: Provision JFrog Artifactory maven repo
-          command: |
-            mkdir -p ~/.m2
-            eval "echo \"$(<~/repo/.circleci/settings.xml)\"" 2> /dev/null 1>~/.m2/settings.xml
-      - run:
           name: Fetch plugins and dependencies
           command: mvn -B -V -T2C -U -P ci-helpers,ci-build,generate-assembly-jar de.qaware.maven:go-offline-maven-plugin:resolve-dependencies
       - save_cache:
           paths:
             - ~/.m2
           key: maven-repo-{{ .Environment.CI_CACHE_VERSION }}-{{ .Branch }}-{{ checksum "pom.xml" }}
+      - run:
+          name: Provision JFrog Artifactory maven repo
+          command: |
+            mkdir -p ~/.m2
+            eval "echo \"$(<~/repo/.circleci/settings.xml)\"" 2> /dev/null 1>~/.m2/settings.xml
       - run:
           name: Build
           command: mvn clean package -DskipTests -Pdist
