@@ -29,7 +29,7 @@ jobs:
           key: maven-repo-{{ .Environment.CI_CACHE_VERSION }}-{{ .Branch }}-{{ checksum "pom.xml" }}
       - run:
           name: Build
-          command: mvn -B -V -T2C clean package -DskipTests -Pdist
+          command: mvn clean package -DskipTests -Pdist
       - run:
           name: Test
           command: mvn test
