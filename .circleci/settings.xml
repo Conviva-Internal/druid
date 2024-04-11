@@ -1,0 +1,23 @@
+<settings xmlns='http://maven.apache.org/SETTINGS/1.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd'>
+    <servers>
+        <server>
+            <id>eng-mvn-all</id>
+            <username>${JFROG_READONLY_USER}</username>
+            <password>${JFROG_READONLY_PW}</password>
+        </server>
+    </servers>
+    <profiles>
+        <profile>
+            <id>artifactory</id>
+<!--            <repositories>-->
+<!--                <repository>-->
+<!--                    <id>eng-mvn-all</id>-->
+<!--                    <url>${JFROG_URL}</url>-->
+<!--                </repository>-->
+<!--            </repositories>-->
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>artifactory</activeProfile>
+    </activeProfiles>
+</settings>
