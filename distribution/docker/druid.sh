@@ -40,7 +40,7 @@
 # - DRUID_CONFIG_COMMON -- full path to a file for druid 'common' properties
 # - DRUID_CONFIG_${service} -- full path to a file for druid 'service' properties
 # - DRUID_SINGLE_NODE_CONF -- config to use at runtime. Choose from: {large, medium, micro-quickstart, nano-quickstart, small, xlarge}
-# - DRUID_ADDITIONAL_CLASSPATH -- a list of colon-separated paths that will be added to the classpath of druid processes. 
+# - DRUID_ADDITIONAL_CLASSPATH -- a list of colon-separated paths that will be added to the classpath of druid processes.
 #                                 These paths can include jars, additional configuration folders (such as HDFS config), etc.
 #                                 It is important to ensure that these paths must exist in the environment druid runs in if they are not part of the distribution.
 
@@ -54,7 +54,7 @@ echo "$(date -Is) startup service $SERVICE"
 # read-only root filesystem
 mkdir -p /tmp/conf/
 test -d /tmp/conf/druid && rm -r /tmp/conf/druid
-cp -r /opt/druid/conf/druid /tmp/conf/druid
+cp -r /conviva/druid/conf/druid /tmp/conf/druid
 
 getConfPath() {
     if [ -n "$DRUID_SINGLE_NODE_CONF" ]

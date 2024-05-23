@@ -27,7 +27,7 @@ FROM --platform=linux/amd64 maven:3.8.6-jdk-11-slim as builder
 
 # Rebuild from source in this stage
 # This can be unset if the tarball was already built outside of Docker
-ARG BUILD_FROM_SOURCE="true"
+ARG BUILD_FROM_SOURCE="false"
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get -qq update \
@@ -73,16 +73,15 @@ LABEL maintainer="Apache Druid Developers <dev@druid.apache.org>"
 
 COPY --from=busybox /bin/busybox /busybox/busybox
 RUN ["/busybox/busybox", "--install", "/bin"]
-
+RUN mkdir -p /conviva/druid
 
 RUN addgroup -S -g 1000 druid \
- && adduser -S -u 1000 -D -H -h /opt/druid -s /bin/sh -g '' -G druid druid
-
+ && adduser -S -u 1000 -D -H -h /conviva/druid -s /bin/sh -g '' -G druid druid
 
 COPY --from=bash-static /bin/bash /bin/bash
 RUN chmod 755 /bin/bash
 
-COPY --chown=druid:druid --from=builder /opt /opt
+COPY --chown=druid:druid --from=builder /opt /conviva
 COPY --from=tarampampam/curl /bin/curl /bin/curl
 COPY distribution/docker/druid.sh /druid.sh
 COPY distribution/docker/peon.sh /peon.sh
@@ -90,12 +89,12 @@ COPY distribution/docker/peon.sh /peon.sh
 # create necessary directories which could be mounted as volume
 #   /opt/druid/var is used to keep individual files(e.g. log) of each Druid service
 #   /opt/shared is used to keep segments and task logs shared among Druid services
-RUN mkdir /opt/druid/var /opt/shared \
- && chown druid:druid /opt/druid/var /opt/shared \
- && chmod 775 /opt/druid/var /opt/shared
+RUN mkdir /conviva/druid/var /conviva/shared \
+ && chown druid:druid /conviva/druid/var /conviva/shared \
+ && chmod 775 /conviva/druid/var /conviva/shared
 
 USER druid
-VOLUME /opt/druid/var
-WORKDIR /opt/druid
+VOLUME /conviva/druid/var
+WORKDIR /conviva/druid
 
 ENTRYPOINT ["/druid.sh"]
